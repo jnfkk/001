@@ -13,7 +13,8 @@
     "test:ui": "node --test tests/browser.ui.mjs",
     "export:offline": "node scripts/export-offline.mjs",
     "export:pages": "node scripts/export-offline.mjs --pages",
-    "test:offline": "node --test tests/offline.ui.mjs"
+    "test:offline": "node --test tests/offline.ui.mjs",
+    "test:pages": "node --test tests/pages.ui.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

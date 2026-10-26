@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <title>HAIR LAB · 你的专属发型顾问</title>
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="HAIR LAB 首页"><span class="brand-mark">✳</span><span>HAIR LAB<small>AI 发型顾问</small></span></a>
+    <nav class="view-tabs" aria-label="工作区">
+      <button class="view-tab active" data-view="customer" aria-pressed="true">客户体验</button>
+      <button class="view-tab" data-view="stylist" aria-pressed="false">发型师工作台 <span>↗</span></button>
+    </nav>
+    <div class="top-actions"><span class="mode-pill" id="mode-pill"><i></i> 风格体验模式</span><button class="text-button" id="help-button">使用指南 <span>↗</span></button></div>
+  </header>
+
+  <main>
+    <section id="customer-view" class="view">
+      <div class="hero">
+        <div><p class="eyebrow"><span></span> A LITTLE CHANGE. A NEW YOU.</p><h1>让合适的发型，<em>先被看见。</em></h1><p class="hero-description">从一张照片开始，探索属于你的下一种可能。</p></div>
+        <div class="hero-note"><div class="tiny-stars">✧ <span>✳</span></div><p>先看效果，再做决定。<br><span>你的风格，由你定义。</span></p></div>
+      </div>
+
+      <div class="workspace">
+        <aside class="profile-panel">
+          <div class="panel-heading"><span class="step-number">01</span><h2>从你开始</h2><span class="muted">YOUR PORTRAIT</span></div>
+          <div class="photo-zone" id="photo-zone">
+            <div class="empty-portrait" id="empty-portrait"><div class="portrait-outline"><span></span></div><span class="photo-caption">每一种改变，都从你开始</span></div>
+            <img id="customer-photo" alt="本次会话中的客户照片" hidden>
+            <button class="remove-photo" id="remove-photo" aria-label="移除客户照片" hidden>×</button>
+            <span class="photo-badge" id="photo-badge">等待你的照片</span>
+          </div>
+          <input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+          <button class="button button-dark upload-button" id="upload-button"><span>↑</span> 上传客户照片</button>
+          <button class="button button-outline camera-button" id="camera-button"><span class="camera-icon"></span> 使用摄像头拍照</button>
+          <p class="photo-tip">正面、自然光、完整露出头发 · JPG / PNG / WebP</p>
+
+          <div class="preferences">
+            <div class="section-label"><h3>聊聊你的偏好</h3><span>让选择更接近你</span></div>
+            <label class="field-label" for="length-pref">这次想尝试的长度</label>
+            <select id="length-pref"><option value="all">保持开放，都想试试</option><option value="short">利落短发</option><option value="medium">轻盈中长发</option><option value="long">保留长发</option></select>
+            <label class="field-label" for="time-pref">每天愿意花多久打理？</label>
+            <select id="time-pref"><option value="all">由我决定，先看效果</option><option value="easy">越省心越好 · 5 分钟左右</option><option value="styled">愿意认真打理 · 10 分钟以上</option></select>
+            <details class="consultation-details"><summary>补充发质与烫染记录 <span>＋</span></summary><label class="field-label" for="hair-condition">目前头发的状态</label><select id="hair-condition"><option value="unknown">待发型师现场评估</option><option value="natural">未烫染的自然发</option><option value="treated">有烫染记录</option><option value="bleached">有漂发 / 明显受损记录</option></select><p>用于沟通与方案提醒，不能代替现场发质检查。</p></details>
+          </div>
+          <label class="consent"><input type="checkbox" id="photo-consent"><span>客户已同意使用照片；真实试发时，照片将发送至图像服务处理。</span></label>
+          <button class="button button-green generate-button" id="generate-button">查看我的风格推荐 <span>✧</span></button>
+          <p class="privacy-note"><span>◈</span> 照片不写入服务器存储，刷新页面后清除</p>
+        </aside>
+
+        <section class="recommendations" aria-labelledby="results-title">
+          <div class="results-heading"><div><p class="eyebrow subtle">YOUR NEXT LOOK</p><h2 id="results-title">发现你的 <span>6</span> 种可能</h2></div><span class="reference-badge" id="results-badge">风格灵感 · 示例模特</span></div>
+          <div class="results-toolbar"><div class="filters" role="group" aria-label="筛选发型长度"><button data-filter="all" class="active" aria-pressed="true">全部 <span>6</span></button><button data-filter="short" aria-pressed="false">短发</button><button data-filter="medium" aria-pressed="false">中长发</button><button data-filter="long" aria-pressed="false">长发</button></div><span class="sort-caption" id="sort-caption">为改变留一点想象</span></div>
+          <div class="generation-status" id="generation-status" role="status" hidden></div>
+          <div class="style-grid" id="style-grid"></div>
+          <div class="results-footnote"><span>✧</span><p id="results-footnote">当前为示例模特的风格参考，尚未替换成你的发型。选择一款，查看设计细节。</p></div>
+          <div class="consultation-banner"><div class="banner-symbol">✳</div><div><h3>好看的发型，也要适合真实的生活。</h3><p>把喜欢的方案带给发型师，一起确认发质、长度和最终色彩。</p></div><button id="open-stylist" class="text-button">进入发型师工作台 <span>↗</span></button></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="stylist-view" class="view" hidden>
+      <div class="hero stylist-hero"><div><p class="eyebrow"><span></span> FROM INSPIRATION TO CRAFT</p><h1>把灵感，<em>落到每一刀。</em></h1><p class="hero-description">一份能一起讨论、由专业判断落地的设计方案。</p></div><button class="button button-outline" id="download-plan">↓ 下载沟通单</button></div>
+      <div class="stylist-workspace"><aside class="stylist-sidebar"><div class="panel-heading"><span class="step-number">02</span><h2>本次设计</h2></div><p class="session-label">临时会话 · 刷新后清除</p><div id="stylist-options"></div><div class="stylist-note"><span>✧</span><p>图像展示意向效果。剪裁、烫染参数由现场发质、底色和所用品牌共同决定。</p></div></aside><div id="stylist-detail" class="stylist-detail"></div></div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-brand">HAIR LAB <span>让每一种美，都有迹可循。</span></div><span>AI 辅助设计 · 专业发型师确认落地</span><span>DESIGNED FOR YOUR NEXT CHAPTER</span></footer>
+  <div id="compare-tray" class="compare-tray" hidden><div><strong>风格对比</strong><span id="compare-count">已选 0 / 3 款</span></div><div id="compare-thumbnails" class="compare-thumbnails"></div><button id="clear-compare" class="text-button">清空</button><button id="compare-button" class="button button-dark">并排看看 <span>↗</span></button></div>
+  <dialog id="detail-dialog" class="detail-dialog"><button class="dialog-close" data-close="detail-dialog" aria-label="关闭方案详情">×</button><div id="detail-content"></div></dialog>
+  <dialog id="compare-dialog" class="compare-dialog"><button class="dialog-close" data-close="compare-dialog" aria-label="关闭发型对比">×</button><div class="dialog-header"><p class="eyebrow">SIDE BY SIDE</p><h2>换个角度，找到喜欢的。</h2><p>参考模特与个人生成效果会分别标注，色彩以实际发丝为准。</p></div><div id="compare-content" class="compare-content"></div></dialog>
+  <dialog id="camera-dialog" class="camera-dialog"><button class="dialog-close" data-close="camera-dialog" aria-label="关闭摄像头">×</button><div class="dialog-header"><p class="eyebrow">A MOMENT FOR YOU</p><h2>拍下现在，想象下一种你。</h2><p>保持正面，自然光，确保完整露出头发。</p></div><div class="camera-stage"><video id="camera-video" autoplay playsinline muted></video><div class="camera-guide"></div><p id="camera-message" role="status">正在请求摄像头权限…</p></div><div class="camera-actions"><button class="button button-outline" id="switch-camera">切换镜头</button><button class="button button-dark" id="capture-button" disabled>拍摄并使用</button></div></dialog>
+  <dialog id="help-dialog" class="help-dialog"><button class="dialog-close" data-close="help-dialog" aria-label="关闭使用指南">×</button><div class="dialog-header"><p class="eyebrow">NICE TO MEET YOU</p><h2>你的下一款发型，从这里开始。</h2></div><ol class="help-steps"><li><span>01</span><div><h3>拍照或上传</h3><p>使用客户同意提供的清晰正面照片。上传后保留在当前页面内存中。</p></div></li><li><span>02</span><div><h3>探索与对比</h3><p>填写长度与打理偏好，查看 6 款参考；最多选择 3 款并排对比。</p></div></li><li><span>03</span><div><h3>交给专业判断</h3><p>发型师可查看剪裁步骤、烫发方向和目标色，并下载沟通单。</p></div></li></ol><div id="service-status" class="service-status"></div><p class="help-note">相机需要浏览器授权与安全连接。生成图会受到原照片、遮挡、光线影响，不能保证染后颜色或剪裁效果完全一致。</p></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
